@@ -46,5 +46,30 @@ body, html {
 .player {
   margin: 5px;
   padding: 5px 5px 10px 5px;
-  background-color: pink;
+  cursor: pointer;
+}
+
+.color1 {
+  background-color: #006C6E;
+}
+.color2 {
+  background-color: #1AB58A;
+}
+.color3 {
+  background-color: #FFF345;
+}
+.color4 {
+  background-color: #FFB63E;
+}
+.color5 {
+  background-color: #FF7850;
+}
+
+.unselectable , .unselectable * {
+-moz-user-select: -moz-none;
+-khtml-user-select: none;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }

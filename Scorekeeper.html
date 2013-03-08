@@ -20,9 +20,11 @@
         </div> 
       </div> 
       <div class="span8">
+      <div class="fluid-container">
         <!--Score Keeper-->
         {{>players}} 
-      </div> 
+      </div>
+        </div> 
       <div class="span2">
         <!--Right Sidebar-->
         <div class="row-fluid sortPlayer">
@@ -43,7 +45,7 @@
 
 <template name="players">
 {{#each player}} 
-<div class="row-fluid player">
+<div class="row-fluid player color{{colorNumber}} unselectable">
   <div class="span6 playerName">
     {{name}}  
   </div> 
