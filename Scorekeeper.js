@@ -1,9 +1,11 @@
 Players = new Meteor.Collection("players");
 if (Meteor.isClient) {
     Meteor.startup(function () {
-        $(function(){
-            $(document).on("mouseup", function (){
+
+        $(function () {
+            $(document).on("mouseup", function () {
                 clearTimeout(pointsTimer);
+                setTimeout(playerSort, 1000);
             });
         });
         // code to run on client at startup
@@ -13,16 +15,31 @@ if (Meteor.isClient) {
 
     var playerScoreAdd = function () {
         addTimer++;
-        Players.update({_id: pointsPlayer._id}, {$set: {"score": pointsPlayer.score + 1}});
+        Players.update({_id: pointsPlayer._id}, {$set: {"scoreWillBe": pointsPlayer.scoreWillBe + 1}});
         pointsTimer = setTimeout(playerScoreAdd, timerStart / addTimer);
     };
     var playerScoreSubtract = function () {
         addTimer++;
-        Players.update({_id: pointsPlayer._id}, {$set: {"score": pointsPlayer.score - 1}});
+        Players.update({_id: pointsPlayer._id}, {$set: {"scoreWillBe": pointsPlayer.scoreWillBe - 1}});
         pointsTimer = setTimeout(playerScoreSubtract, timerStart / addTimer);
     };
+
+    var playerSort = function () {
+        Players.find().forEach(function (player) {
+            //Fixes unknown scores
+            if (player.scoreWillBe == undefined) {
+                Players.update({_id: player._id}, {$set: {"scoreWillBe": player.score}});
+
+            }
+            if (player.scoreWillBe == undefined || player.scoreWillBe != player.score) {
+                Players.update({_id: player._id}, {$set: {"score": player.scoreWillBe}});
+            }
+        });
+    };
+
+//Template players
     Template.players.player = function () {
-        return Players.find();
+        return Players.find({}, {sort: { score: -1}});
     };
     Template.players.events = {
         "mousedown .playerScoreSubtract": function (event, template) {
