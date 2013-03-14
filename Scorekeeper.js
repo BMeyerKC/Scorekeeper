@@ -38,6 +38,7 @@ if (Meteor.isClient) {
     };
 
 //Template players
+    Template.players.preserve([".player"]);
     Template.players.player = function () {
         return Players.find({}, {sort: { score: -1}});
     };
